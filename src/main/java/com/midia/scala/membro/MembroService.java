@@ -1,17 +1,31 @@
 package com.midia.scala.membro;
 
 
+import com.midia.scala.model.Membro;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MembroService {
+    private final MembroRepository membroRepository;
 
-    public List<Membro> getStudent() {
-        return List.of(
-                new Membro("123", "Fulano", "11987654321", "1", "0"),
-                new Membro("121", "Sicrano", "11987654921", "1", "1"),
-                new Membro("120", "Beltrano", "11982354321", "1", "0"));
+    @Autowired
+    public MembroService(MembroRepository membroRepository) {
+        this.membroRepository = membroRepository;
+    }
+
+    public List<Membro> getMembros() {
+        return membroRepository.findAll();
+    }
+
+    public void save(Membro membro) {
+        membroRepository.save(membro);
+    }
+
+    public Membro getMembroByTelefone(String telefone) {
+        return membroRepository.findByTelefone(telefone)
+                .orElse(new Membro());
     }
 }

@@ -1,24 +1,43 @@
 package com.midia.scala.membro;
 
+import com.midia.scala.Exerce.ExerceService;
+import com.midia.scala.model.Exerce;
+import com.midia.scala.model.Membro;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path="api/membro")
 public class MembroController {
     private final MembroService membroService;
+    private final ExerceService exerceService;
 
     @Autowired
-    public MembroController(MembroService membroService) {
+    public MembroController(MembroService membroService, ExerceService exerceService) {
         this.membroService = membroService;
+        this.exerceService = exerceService;
     }
 
     @GetMapping
-    public List<Membro> getStudent() {
-        return membroService.getStudent();
+    public List<Membro> getMembros() {
+        return membroService.getMembros();
+    }
+
+    @RequestMapping(value = "/{telefone}", method = RequestMethod.GET)
+    public Membro findByTelefone(@PathVariable("telefone") String telefone) {
+        return membroService.getMembroByTelefone(telefone);
+    }
+
+    @PostMapping("/exerce")
+    public void save(@RequestBody Membro membro, @RequestParam(name = "funcao_id") UUID funcaoId) {
+        membroService.save(membro);
+        exerceService.save(
+                new Exerce(
+                        membro.getId(),
+                        funcaoId)
+        );
     }
 }
