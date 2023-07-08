@@ -1,6 +1,5 @@
 package com.midia.scala.Exerce;
 
-import com.midia.scala.model.Exerce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -18,4 +17,6 @@ public class ExerceController {
     public void saveAll(Set<Exerce> exerceSet) {
         exerceService.saveAll(exerceSet);
     }
+
+    public void save(Exerce exerce) { exerceService.save(exerce); }
 }

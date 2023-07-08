@@ -1,7 +1,6 @@
 package com.midia.scala.membro;
 
 
-import com.midia.scala.model.Membro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

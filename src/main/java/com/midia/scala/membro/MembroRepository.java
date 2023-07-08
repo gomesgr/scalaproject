@@ -1,6 +1,5 @@
 package com.midia.scala.membro;
 
-import com.midia.scala.model.Membro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

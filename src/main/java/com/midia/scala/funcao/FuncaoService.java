@@ -1,10 +1,12 @@
 package com.midia.scala.funcao;
 
-import com.midia.scala.model.Funcao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FuncaoService {
@@ -18,5 +20,14 @@ public class FuncaoService {
 
     public List<Funcao> findAll() {
         return funcaoRepository.findAll();
+    }
+
+    public Funcao findById(UUID id) {
+        return funcaoRepository.findById(id).orElse(new Funcao());
+    }
+
+    public ResponseEntity<Object> testApi(Funcao funcao) {
+        if (funcao.getNome().equals("Pregador")) { return new ResponseEntity("Created", HttpStatus.CREATED); }
+        return new ResponseEntity("NOT CREATED (USED)", HttpStatus.IM_USED);
     }
 }

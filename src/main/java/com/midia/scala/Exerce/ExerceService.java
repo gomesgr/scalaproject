@@ -1,6 +1,5 @@
 package com.midia.scala.Exerce;
 
-import com.midia.scala.model.Exerce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

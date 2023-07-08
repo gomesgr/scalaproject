@@ -1,8 +1,10 @@
-package com.midia.scala.model;
+package com.midia.scala.membro;
 
+import com.midia.scala.Exerce.Exerce;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -10,8 +12,8 @@ import java.util.UUID;
 @Data
 public class Membro {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column(columnDefinition = "varchar(25)")
     private String nome;
@@ -31,6 +33,9 @@ public class Membro {
     @Column(columnDefinition = "VARCHAR(6) CHECK (provedor IN ('LOCAL', 'GOOGLE'))")
     private String provedor;
 
+    @OneToMany(mappedBy = "membro")
+    private Set<Exerce> exerceSet;
+
     public Membro(String nome, String telefone, String ativo, String administrador, String usuario, String provedor) {
         this.nome = nome;
         this.telefone = telefone;
@@ -40,7 +45,7 @@ public class Membro {
         this.provedor = provedor;
     }
 
-    public Membro(UUID id, String nome, String telefone, String ativo, String administrador, String usuario, String provedor) {
+    public Membro(Long id, String nome, String telefone, String ativo, String administrador, String usuario, String provedor) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -53,7 +58,7 @@ public class Membro {
     public Membro() {
     }
 
-    public Membro(UUID id) {
+    public Membro(Long id) {
         this.id = id;
     }
 }

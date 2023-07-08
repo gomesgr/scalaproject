@@ -1,24 +1,28 @@
-package com.midia.scala.model;
+package com.midia.scala.funcao;
 
+import com.midia.scala.Exerce.Exerce;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Table
 @Data
 public class Funcao {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NonNull
     @Column(columnDefinition = "VARCHAR(15)", nullable = false, unique = true)
     private String nome;
 
-    public Funcao(UUID id, @NonNull String nome) {
+    @OneToMany(mappedBy = "funcao")
+    private Set<Exerce> exerceSet;
+
+    public Funcao(Long id, @NonNull String nome) {
         this.id = id;
         this.nome = nome;
     }

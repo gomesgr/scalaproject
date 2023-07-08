@@ -1,8 +1,8 @@
 package com.midia.scala.membro;
 
 import com.midia.scala.Exerce.ExerceService;
-import com.midia.scala.model.Exerce;
-import com.midia.scala.model.Membro;
+import com.midia.scala.funcao.FuncaoService;
+import com.midia.scala.Exerce.Exerce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +14,13 @@ import java.util.UUID;
 public class MembroController {
     private final MembroService membroService;
     private final ExerceService exerceService;
+    private final FuncaoService funcaoService;
 
     @Autowired
-    public MembroController(MembroService membroService, ExerceService exerceService) {
+    public MembroController(MembroService membroService, ExerceService exerceService, FuncaoService funcaoService) {
         this.membroService = membroService;
         this.exerceService = exerceService;
+        this.funcaoService = funcaoService;
     }
 
     @GetMapping
@@ -36,8 +38,8 @@ public class MembroController {
         membroService.save(membro);
         exerceService.save(
                 new Exerce(
-                        membro.getId(),
-                        funcaoId)
+                        membro,
+                        funcaoService.findById(funcaoId))
         );
     }
 }

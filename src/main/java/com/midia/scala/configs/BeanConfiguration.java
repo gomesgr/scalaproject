@@ -1,10 +1,10 @@
 package com.midia.scala.configs;
 
-import com.midia.scala.model.Exerce;
+import com.midia.scala.Exerce.Exerce;
 import com.midia.scala.Exerce.ExerceRepository;
-import com.midia.scala.model.Funcao;
+import com.midia.scala.funcao.Funcao;
 import com.midia.scala.funcao.FuncaoRepository;
-import com.midia.scala.model.Membro;
+import com.midia.scala.membro.Membro;
 import com.midia.scala.membro.MembroRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +24,7 @@ public class BeanConfiguration {
             Funcao fotos = new Funcao("Fotos");
             Funcao stories = new Funcao("Stories");
             Funcao cabos = new Funcao("Cabos");
+            Funcao pregador = new Funcao("Pregador");
 
 
 
@@ -67,14 +68,16 @@ public class BeanConfiguration {
             funcaoRepository.saveAll(List.of(gc, som, fotos, stories, cabos));
 
             exerceRepository.saveAll(Set.of(
-                    new Exerce(g.getId(), gc.getId()),
-                    new Exerce(v.getId(), gc.getId()),
-                    new Exerce(p.getId(), gc.getId()),
-                    new Exerce(t.getId(), fotos.getId()),
-                    new Exerce(v.getId(), som.getId()),
-                    new Exerce(v.getId(), fotos.getId()),
-                    new Exerce(p.getId(), som.getId())
+                    new Exerce(g, gc),
+                    new Exerce(v, gc),
+                    new Exerce(p, gc),
+                    new Exerce(t, fotos),
+                    new Exerce(v, som),
+                    new Exerce(v, fotos),
+                    new Exerce(p, som)
             ));
+
+            exerceRepository.save(new Exerce(p, fotos));
         };
     }
 }
