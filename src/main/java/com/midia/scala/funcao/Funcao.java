@@ -1,6 +1,7 @@
 package com.midia.scala.funcao;
 
 import com.midia.scala.Exerce.Exerce;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -15,7 +16,7 @@ public class Funcao {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NonNull
+    @Nonnull
     @Column(columnDefinition = "VARCHAR(15)", nullable = false, unique = true)
     private String nome;
 

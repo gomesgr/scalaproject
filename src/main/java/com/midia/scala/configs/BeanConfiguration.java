@@ -2,6 +2,8 @@ package com.midia.scala.configs;
 
 import com.midia.scala.Exerce.Exerce;
 import com.midia.scala.Exerce.ExerceRepository;
+import com.midia.scala.culto.Culto;
+import com.midia.scala.culto.CultoRepository;
 import com.midia.scala.funcao.Funcao;
 import com.midia.scala.funcao.FuncaoRepository;
 import com.midia.scala.membro.Membro;
@@ -17,7 +19,7 @@ import java.util.Set;
 public class BeanConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner(FuncaoRepository funcaoRepository, MembroRepository membroRepository, ExerceRepository exerceRepository) {
+    CommandLineRunner commandLineRunner(FuncaoRepository funcaoRepository, MembroRepository membroRepository, ExerceRepository exerceRepository, CultoRepository cultoRepository) {
         return args -> {
             Funcao gc = new Funcao("GC");
             Funcao som = new Funcao("Som");
@@ -63,8 +65,15 @@ public class BeanConfiguration {
                     "LOCAL"
             );
 
+            Membro j = new Membro(
+                    "Jamily",
+                    "11987659809",
+                    "1", "0",
+                    "jamilyi", "LOCAL"
+            );
 
-            membroRepository.saveAll(List.of(p, v, t, g));
+
+            membroRepository.saveAll(List.of(p, v, t, g, j));
             funcaoRepository.saveAll(List.of(gc, som, fotos, stories, cabos));
 
             exerceRepository.saveAll(Set.of(
@@ -74,10 +83,21 @@ public class BeanConfiguration {
                     new Exerce(t, fotos),
                     new Exerce(v, som),
                     new Exerce(v, fotos),
-                    new Exerce(p, som)
+                    new Exerce(p, som),
+                    new Exerce(j, fotos),
+                    new Exerce(j, gc),
+                    new Exerce(j, stories)
             ));
 
             exerceRepository.save(new Exerce(p, fotos));
+
+            long segunda = 1689631200000L;
+            long domingo = 1689541200000L;
+            Culto c = new Culto((segunda), "Aviva Segunda");
+            Culto d = new Culto((domingo), "Culto da Família");
+
+            cultoRepository.saveAll(Set.of(c, d));
+
         };
     }
 }

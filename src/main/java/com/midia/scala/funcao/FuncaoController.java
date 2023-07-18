@@ -17,6 +17,7 @@ public class FuncaoController {
         this.funcaoService = funcaoService;
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public List<Funcao> findAll() {
         return funcaoService.findAll();

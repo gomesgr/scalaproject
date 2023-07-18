@@ -23,6 +23,7 @@ public class MembroController {
         this.funcaoService = funcaoService;
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public List<Membro> getMembros() {
         return membroService.getMembros();

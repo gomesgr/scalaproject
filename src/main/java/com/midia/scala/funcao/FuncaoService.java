@@ -19,11 +19,11 @@ public class FuncaoService {
     }
 
     public List<Funcao> findAll() {
-        return funcaoRepository.findAll();
+        return this.funcaoRepository.findAll();
     }
 
     public Funcao findById(UUID id) {
-        return funcaoRepository.findById(id).orElse(new Funcao());
+        return this.funcaoRepository.findById(id).orElse(new Funcao());
     }
 
     public ResponseEntity<Object> testApi(Funcao funcao) {
