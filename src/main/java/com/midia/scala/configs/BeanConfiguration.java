@@ -8,6 +8,8 @@ import com.midia.scala.funcao.Funcao;
 import com.midia.scala.funcao.FuncaoRepository;
 import com.midia.scala.membro.Membro;
 import com.midia.scala.membro.MembroRepository;
+import com.midia.scala.trabalha.Trabalha;
+import com.midia.scala.trabalha.TrabalhaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,9 @@ import java.util.Set;
 public class BeanConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner(FuncaoRepository funcaoRepository, MembroRepository membroRepository, ExerceRepository exerceRepository, CultoRepository cultoRepository) {
+    CommandLineRunner commandLineRunner(FuncaoRepository funcaoRepository, MembroRepository membroRepository,
+                                        ExerceRepository exerceRepository, CultoRepository cultoRepository,
+                                        TrabalhaRepository trabalhaRepository) {
         return args -> {
             Funcao gc = new Funcao("GC");
             Funcao som = new Funcao("Som");
@@ -76,15 +80,18 @@ public class BeanConfiguration {
             membroRepository.saveAll(List.of(p, v, t, g, j));
             funcaoRepository.saveAll(List.of(gc, som, fotos, stories, cabos));
 
+            Exerce ggc = new Exerce(g, gc);
+            Exerce jfoto = new Exerce(j, fotos);
+
             exerceRepository.saveAll(Set.of(
-                    new Exerce(g, gc),
+                    ggc,
                     new Exerce(v, gc),
                     new Exerce(p, gc),
                     new Exerce(t, fotos),
                     new Exerce(v, som),
                     new Exerce(v, fotos),
                     new Exerce(p, som),
-                    new Exerce(j, fotos),
+                    jfoto,
                     new Exerce(j, gc),
                     new Exerce(j, stories)
             ));
@@ -93,11 +100,18 @@ public class BeanConfiguration {
 
             long segunda = 1689631200000L;
             long domingo = 1689541200000L;
-            Culto c = new Culto((segunda), "Aviva Segunda");
-            Culto d = new Culto((domingo), "Culto da Família");
+            long domingo2 = 1690146000000L;
+            Culto avivaSegunda = new Culto((segunda), "Aviva Segunda");
+            Culto cultoDaFamilia = new Culto((domingo), "Culto da Família");
+            Culto dd = new Culto(domingo2, "Culto da Família");
 
-            cultoRepository.saveAll(Set.of(c, d));
+            cultoRepository.saveAll(Set.of(avivaSegunda, cultoDaFamilia, dd));
 
+            Trabalha t1 = new Trabalha(ggc, avivaSegunda);
+            Trabalha t2 = new Trabalha(jfoto, cultoDaFamilia);
+
+            trabalhaRepository.save(t1);
+            trabalhaRepository.save(t2);
         };
     }
 }

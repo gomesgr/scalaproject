@@ -3,11 +3,15 @@ package com.midia.scala.Exerce;
 import com.midia.scala.funcao.Funcao;
 import com.midia.scala.membro.Membro;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Exerce {
 
     @Id
@@ -24,12 +28,12 @@ public class Exerce {
     @JoinColumn(name = "funcao_id", foreignKey = @ForeignKey(name = "fk_funcao_exerce"))
     private Funcao funcao;
 
+//    @OneToMany(mappedBy = "exerce")
+//    private Set<Trabalha> trabalham;
+
     public Exerce(Membro membro, Funcao funcao) {
         this.membro = membro;
         this.funcao = funcao;
-    }
-
-    public Exerce() {
     }
 
     public Exerce(Long id) {

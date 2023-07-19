@@ -2,14 +2,17 @@ package com.midia.scala.membro;
 
 import com.midia.scala.Exerce.Exerce;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Membro {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -53,9 +56,6 @@ public class Membro {
         this.administrador = administrador;
         this.usuario = usuario;
         this.provedor = provedor;
-    }
-
-    public Membro() {
     }
 
     public Membro(Long id) {

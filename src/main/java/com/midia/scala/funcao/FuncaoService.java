@@ -27,7 +27,9 @@ public class FuncaoService {
     }
 
     public ResponseEntity<Object> testApi(Funcao funcao) {
-        if (funcao.getNome().equals("Pregador")) { return new ResponseEntity("Created", HttpStatus.CREATED); }
-        return new ResponseEntity("NOT CREATED (USED)", HttpStatus.IM_USED);
+        if (funcao.getNome().equals("Pregador")) {
+            return new ResponseEntity<>("Created", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("NOT CREATED (USED)", HttpStatus.IM_USED);
     }
 }
