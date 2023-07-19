@@ -1,10 +1,10 @@
 package com.midia.scala.trabalha;
 
+import com.midia.scala.culto.Culto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/api/trabalha")
@@ -21,6 +21,17 @@ public class TrabalhaController {
     @GetMapping
     public List<Trabalha> findAll() {
         return this.trabalhaService.findAll();
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping(path = "teste")
+    public Optional<Trabalha> findByCultoData(Culto culto) {
+        for (Trabalha trabalha: findAll()) {
+            if (Objects.equals(trabalha.getCulto().getData(), culto.getData())) {
+                return Optional.of(trabalha);
+            }
+        }
+        return Optional.empty();
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
