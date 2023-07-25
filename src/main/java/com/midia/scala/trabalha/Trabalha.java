@@ -19,11 +19,11 @@ public class Trabalha {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "exerce_id", foreignKey = @ForeignKey(name = "fk_exerce_trabalha"))
+    @JoinColumn(name = "exerce_id", foreignKey = @ForeignKey(name = "fk_exerce_trabalha"), nullable = false)
     private Exerce exerce;
 
     @ManyToOne
-    @JoinColumn(name = "culto_data", foreignKey = @ForeignKey(name = "fk_culto_trabalha"))
+    @JoinColumn(name = "culto_data", foreignKey = @ForeignKey(name = "fk_culto_trabalha"), nullable = false)
     private Culto culto;
 
     public Trabalha(Exerce exerce, Culto culto) {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -21,5 +22,9 @@ public class CultoService {
 
     public void saveAll(Set<Culto> cultos) {
         this.cultoRepository.saveAll(cultos);
+    }
+
+    public Optional<Culto> findCultoByData(Long cultoData) {
+        return this.cultoRepository.findById(cultoData);
     }
 }

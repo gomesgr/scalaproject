@@ -101,11 +101,13 @@ public class BeanConfiguration {
             long segunda = 1689631200000L;
             long domingo = 1689541200000L;
             long domingo2 = 1690146000000L;
+            long sabado14 = 1689458400000L;
             Culto avivaSegunda = new Culto((segunda), "Aviva Segunda");
             Culto cultoDaFamilia = new Culto((domingo), "Culto da Família");
+            Culto santaCeia = new Culto(sabado14, "Santa Ceia");
             Culto dd = new Culto(domingo2, "Culto da Família");
 
-            cultoRepository.saveAll(Set.of(avivaSegunda, cultoDaFamilia, dd));
+            cultoRepository.saveAll(Set.of(avivaSegunda, cultoDaFamilia, dd, santaCeia));
 
             Trabalha t1 = new Trabalha(ggc, avivaSegunda);
             Trabalha t2 = new Trabalha(jfoto, cultoDaFamilia);

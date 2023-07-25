@@ -1,10 +1,15 @@
 package com.midia.scala.trabalha;
 
-import com.midia.scala.culto.Culto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api/trabalha")
@@ -24,10 +29,26 @@ public class TrabalhaController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
-    @GetMapping(path = "teste")
-    public Optional<Trabalha> findByCultoData(Culto culto) {
+    @GetMapping(path = "/mensal/{cultoData}")
+    public List<Trabalha> findMensal(@PathVariable("cultoData") Long cultoData) {
+        LocalDateTime ldt = Instant.ofEpochMilli(cultoData)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        return this.trabalhaService.findAll()
+                .stream()
+                .filter(trabalha ->
+                        Instant.ofEpochMilli(trabalha.getCulto().getData())
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime().getMonthValue() == ldt.getMonthValue()
+                ).toList();
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping(path = "{cultoData}")
+    public Optional<Trabalha> findByCultoData(@PathVariable("cultoData") Long cultoData) {
         for (Trabalha trabalha: findAll()) {
-            if (Objects.equals(trabalha.getCulto().getData(), culto.getData())) {
+            if (Objects.equals(trabalha.getCulto().getData(), cultoData)) {
                 return Optional.of(trabalha);
             }
         }

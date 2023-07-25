@@ -1,12 +1,10 @@
 package com.midia.scala.culto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -24,6 +22,12 @@ public class CultoController {
     @GetMapping
     public List<Culto> findAll() {
         return this.cultoService.findAll();
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping(path = "{cultoData}")
+    public Optional<Culto> findCultoByData(@PathVariable("cultoData") Long cultoData) {
+        return this.cultoService.findCultoByData(cultoData);
     }
 
     public void saveAll(Set<Culto> cultos) {
