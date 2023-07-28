@@ -76,24 +76,42 @@ public class BeanConfiguration {
                     "jamilyi", "LOCAL"
             );
 
+            Membro ky = new Membro(
+                    "Guilherme",
+                    "1198340987",
+                    "1", "0",
+                    "kioshii", "LOCAL"
+            );
 
-            membroRepository.saveAll(List.of(p, v, t, g, j));
+
+            membroRepository.saveAll(List.of(p, v, t, g, j, ky));
             funcaoRepository.saveAll(List.of(gc, som, fotos, stories, cabos));
 
             Exerce ggc = new Exerce(g, gc);
             Exerce jfoto = new Exerce(j, fotos);
+            Exerce vsom = new Exerce(v, som);
+            Exerce tst = new Exerce(t, stories);
+            Exerce pca = new Exerce(p, cabos);
+            Exerce kca = new Exerce(ky, cabos);
+            Exerce kso = new Exerce(ky, som);
+            Exerce kgc = new Exerce(ky, gc);
 
             exerceRepository.saveAll(Set.of(
                     ggc,
                     new Exerce(v, gc),
                     new Exerce(p, gc),
                     new Exerce(t, fotos),
-                    new Exerce(v, som),
                     new Exerce(v, fotos),
                     new Exerce(p, som),
                     jfoto,
                     new Exerce(j, gc),
-                    new Exerce(j, stories)
+                    new Exerce(j, stories),
+                    vsom,
+                    tst,
+                    pca,
+                    kca,
+                    kso,
+                    kgc
             ));
 
             exerceRepository.save(new Exerce(p, fotos));
@@ -102,18 +120,37 @@ public class BeanConfiguration {
             long domingo = 1689541200000L;
             long domingo2 = 1690146000000L;
             long sabado14 = 1689458400000L;
+            long domingoJun = 1687725900000L;
+
             Culto avivaSegunda = new Culto((segunda), "Aviva Segunda");
             Culto cultoDaFamilia = new Culto((domingo), "Culto da Família");
+            Culto cultoCriancas = new Culto(1689512400000L, "Culto das Crianças");
             Culto santaCeia = new Culto(sabado14, "Santa Ceia");
             Culto dd = new Culto(domingo2, "Culto da Família");
+            Culto cdfJun = new Culto(domingoJun, "Culto da Família");
 
-            cultoRepository.saveAll(Set.of(avivaSegunda, cultoDaFamilia, dd, santaCeia));
+            cultoRepository.saveAll(Set.of(avivaSegunda, cultoDaFamilia, dd, santaCeia, cdfJun, cultoCriancas));
 
             Trabalha t1 = new Trabalha(ggc, avivaSegunda);
             Trabalha t2 = new Trabalha(jfoto, cultoDaFamilia);
+            Trabalha t3 = new Trabalha(vsom, cdfJun);
+
+            Trabalha t4 = new Trabalha(pca, cultoDaFamilia);
+            Trabalha t5 = new Trabalha(ggc, cultoDaFamilia);
+            Trabalha t6 = new Trabalha(vsom, cultoDaFamilia);
+            Trabalha t7 = new Trabalha(tst, cultoDaFamilia);
+
+            Trabalha criKyGc = new Trabalha(kgc, cultoCriancas);
+            Trabalha criVSom = new Trabalha(vsom, cultoCriancas);
+            Trabalha criJFot = new Trabalha(jfoto, cultoCriancas);
+            Trabalha criPCab = new Trabalha(pca, cultoCriancas);
+            Trabalha criTSto = new Trabalha(tst, cultoCriancas);
 
             trabalhaRepository.save(t1);
             trabalhaRepository.save(t2);
+            trabalhaRepository.save(t3);
+            trabalhaRepository.saveAll(Set.of(t4, t5, t6, t7));
+            trabalhaRepository.saveAll(Set.of(criKyGc, criJFot, criPCab, criTSto, criVSom));
         };
     }
 }

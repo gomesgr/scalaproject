@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/api/trabalha")
@@ -29,30 +26,35 @@ public class TrabalhaController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
-    @GetMapping(path = "/mensal/{cultoData}")
-    public List<Trabalha> findMensal(@PathVariable("cultoData") Long cultoData) {
-        LocalDateTime ldt = Instant.ofEpochMilli(cultoData)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-
+    @GetMapping(path = "/mensal/{mes}")
+    public List<Trabalha> findMensal(@PathVariable("mes") Integer mes) {
         return this.trabalhaService.findAll()
                 .stream()
                 .filter(trabalha ->
                         Instant.ofEpochMilli(trabalha.getCulto().getData())
                             .atZone(ZoneId.systemDefault())
-                            .toLocalDateTime().getMonthValue() == ldt.getMonthValue()
+                            .toLocalDateTime().getMonthValue() == mes
                 ).toList();
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping(path = "{cultoData}")
-    public Optional<Trabalha> findByCultoData(@PathVariable("cultoData") Long cultoData) {
+    public List<Trabalha> findByCultoData(@PathVariable("cultoData") Long cultoData) {
+        List<Trabalha> trabalhadores = new ArrayList<>();
+        LocalDateTime ldt = Instant.ofEpochMilli(cultoData)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
         for (Trabalha trabalha: findAll()) {
-            if (Objects.equals(trabalha.getCulto().getData(), cultoData)) {
-                return Optional.of(trabalha);
+
+            if (Objects.equals(
+                    Instant.ofEpochMilli(trabalha.getCulto().getData())
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime().getDayOfMonth(),
+                    ldt.getDayOfMonth())) {
+               trabalhadores.add(trabalha);
             }
         }
-        return Optional.empty();
+        return trabalhadores;
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
